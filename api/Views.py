@@ -269,7 +269,7 @@ def recap_data():
         if not df_rccomm.empty:
             first_row = df_rccomm.iloc[0]
             columns_values2["CREANCEGLOBAL"] = first_row.get(
-                "CREANCE TTC", 0) + first_row.get("CREANCE HT", 0)
+                "CREANCE A CREDIT", 0)+first_row.get("CREANCE NOCIVE", 0)
             columns_values2["COMMANDESLIVRE"] = first_row.get(
                 "COMMANDES RENDU LIVRE", 0)
 
