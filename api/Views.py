@@ -159,13 +159,21 @@ def TransportData():
             TransportCash = {
                 "TransportCash": Transport_df["transport"].values.tolist()
             }
-            return jsonify(TransprtName, TransportCash)
+            selected_columns = [
+                "clientName", "QNTENTSURTRANSPORT", "transport"
+            ]
+            TransportTable = Transport_df[selected_columns].to_dict(
+                orient="records")
+            print(TransportTable)
+            return jsonify(TransprtName, TransportCash,
+                           {"TransportDataTable": TransportTable})
         else:
 
             return jsonify({
                 "error":
                 "Opps !! Les données que vous avez entrées sont introuvables."
             })
+
 
 @app.route("/api/db/Plafond", methods=["POST", "GET"])
 def PlafondData():
@@ -207,6 +215,7 @@ def PlafondData():
                 "error":
                 "Opps !! Les données que vous avez entrées sont introuvables."
             })
+
 
 @app.route("/api/db/recap", methods=["POST", "GET"])
 def recap_data():
@@ -269,7 +278,7 @@ def recap_data():
         if not df_rccomm.empty:
             first_row = df_rccomm.iloc[0]
             columns_values2["CREANCEGLOBAL"] = first_row.get(
-                "CREANCE A CREDIT", 0)+first_row.get("CREANCE NOCIVE", 0)
+                "CREANCE A CREDIT", 0) + first_row.get("CREANCE NOCIVE", 0)
             columns_values2["COMMANDESLIVRE"] = first_row.get(
                 "COMMANDES RENDU LIVRE", 0)
 
